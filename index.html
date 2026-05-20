@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#22c55e" />
+  <link rel="manifest" href="manifest.json">
+  <title>Lista de Compras</title>
+  <style>
+    :root { --green:#22c55e; --dark:#111827; --muted:#6b7280; --bg:#f3f4f6; --border:#e5e7eb; --red:#dc2626; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; background:var(--bg); color:var(--dark); }
+    .app { max-width:520px; margin:0 auto; min-height:100vh; background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+    header { background:var(--green); color:white; padding:24px 18px 18px; border-bottom-left-radius:28px; border-bottom-right-radius:28px; }
+    h1 { margin:0; font-size:28px; }
+    header p { margin:6px 0 0; opacity:.9; }
+    .summary { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; padding:14px; }
+    .box { background:white; border:1px solid var(--border); border-radius:18px; padding:12px 8px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+    .box span { display:block; color:var(--muted); font-size:12px; }
+    .box strong { display:block; font-size:16px; margin-top:4px; }
+    .new { margin:0 14px 12px; background:#f9fafb; border:1px solid var(--border); border-radius:22px; padding:12px; }
+    .grid { display:grid; grid-template-columns:1fr 2fr; gap:8px; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
+    input { width:100%; border:1px solid var(--border); border-radius:12px; padding:11px; font-size:16px; background:white; }
+    button { border:0; border-radius:12px; padding:11px 12px; font-size:15px; font-weight:700; cursor:pointer; }
+    .add { background:var(--green); color:white; width:100%; margin-top:8px; }
+    .items { padding:0 14px 120px; }
+    .item { border:1px solid var(--border); border-radius:22px; padding:12px; margin-bottom:10px; background:white; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+    .item.done { background:#ecfdf5; border-color:#bbf7d0; }
+    .top { display:flex; gap:10px; align-items:center; }
+    .check { width:30px; height:30px; border-radius:50%; border:2px solid var(--green); display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0; background:white; }
+    .done .check { background:var(--green); }
+    .product { flex:1; font-weight:800; font-size:18px; border:0; border-bottom:1px solid var(--border); border-radius:0; padding:6px 2px; background:transparent; }
+    .done .product { text-decoration:line-through; color:var(--muted); }
+    label { font-size:12px; color:var(--muted); display:block; margin-top:9px; }
+    .total-row { margin-top:10px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .item-total { font-weight:900; color:#15803d; font-size:16px; }
+    .delete { background:#fee2e2; color:var(--red); padding:9px 12px; }
+    .footer { position:fixed; left:50%; transform:translateX(-50%); bottom:0; width:100%; max-width:520px; background:white; border-top:1px solid var(--border); padding:14px 16px calc(14px + env(safe-area-inset-bottom)); display:flex; justify-content:space-between; align-items:center; box-shadow:0 -6px 18px rgba(0,0,0,.08); }
+    .footer span { display:block; color:var(--muted); font-size:12px; }
+    .footer strong { display:block; font-size:22px; color:#15803d; }
+    .small strong { font-size:16px; color:var(--dark); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>🛒 Lista de Compras</h1>
+      <p>Precio unitario, cantidad real y total automático</p>
+    </header>
+
+    <section class="summary">
+      <div class="box"><span>Total</span><strong id="totalTop">$0</strong></div>
+      <div class="box"><span>Comprados</span><strong id="countDone">0</strong></div>
+      <div class="box"><span>Faltan</span><strong id="countPending">0</strong></div>
+    </section>
+
+    <section class="new">
+      <div class="grid">
+        <input id="newQty" placeholder="Cant. pedida" value="1 un">
+        <input id="newName" placeholder="Producto">
+      </div>
+      <div class="grid2">
+        <input id="newUnit" placeholder="Precio kg/unidad" inputmode="numeric">
+        <button class="add" onclick="addItem()">Agregar</button>
+      </div>
+    </section>
+
+    <main class="items" id="items"></main>
+
+    <footer class="footer">
+      <div class="small">
+        <span>Gastado marcado</span>
+        <strong id="doneTotal">$0</strong>
+      </div>
+      <div style="text-align:right">
+        <span>Total lista</span>
+        <strong id="grandTotal">$0</strong>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const starter = [
+      { id: 1, pedida: "1 kg", comprada: "", unitario: "", producto: "Manzana", pagado: "", done: false },
+      { id: 2, pedida: "2 kg", comprada: "", unitario: "", producto: "Membrillo", pagado: "", done: false },
+      { id: 3, pedida: "1/2 kg", comprada: "", unitario: "", producto: "Zanahoria", pagado: "", done: false },
+      { id: 4, pedida: "3 un", comprada: "", unitario: "", producto: "Pimentón", pagado: "", done: false },
+      { id: 5, pedida: "1 un", comprada: "", unitario: "", producto: "Lechuga", pagado: "", done: false },
+      { id: 6, pedida: "1 kg", comprada: "", unitario: "", producto: "Tomate chicos", pagado: "", done: false },
+      { id: 7, pedida: "1 un", comprada: "", unitario: "", producto: "Zapallo", pagado: "", done: false },
+      { id: 8, pedida: "2 un", comprada: "", unitario: "", producto: "Choclo", pagado: "", done: false },
+      { id: 9, pedida: "10 un", comprada: "", unitario: "", producto: "Cebollas chicas", pagado: "", done: false },
+      { id: 10, pedida: "6 un", comprada: "", unitario: "", producto: "Galletas", pagado: "", done: false }
+    ];
+
+    let items = JSON.parse(localStorage.getItem("listaComprasCristobal") || "null") || starter;
+
+    const money = n => new Intl.NumberFormat("es-CL", { style:"currency", currency:"CLP", maximumFractionDigits:0 }).format(n || 0);
+    function parsePrice(v) { return Number(String(v || "").replace(/[^0-9]/g, "")) || 0; }
+    function parseQty(v) {
+      const t = String(v || "").toLowerCase().replace(",", ".");
+      if (t.includes("1/2")) return 0.5;
+      const m = t.match(/\d+(\.\d+)?/);
+      return m ? Number(m[0]) : 0;
+    }
+    function itemTotal(item) {
+      const manual = parsePrice(item.pagado);
+      if (manual > 0) return manual;
+      return parseQty(item.comprada || item.pedida) * parsePrice(item.unitario);
+    }
+    function clean(v) { return String(v || "").replace(/"/g, "&quot;"); }
+    function save() { localStorage.setItem("listaComprasCristobal", JSON.stringify(items)); }
+    function update(id, field, value) { items = items.map(i => i.id === id ? {...i, [field]: value} : i); save(); render(); }
+    function toggle(id) { items = items.map(i => i.id === id ? {...i, done: !i.done} : i); save(); render(); }
+    function removeItem(id) { items = items.filter(i => i.id !== id); save(); render(); }
+    function addItem() {
+      const producto = document.getElementById("newName").value.trim();
+      if (!producto) return;
+      items.push({
+        id: Date.now(),
+        pedida: document.getElementById("newQty").value || "1 un",
+        comprada: "",
+        unitario: document.getElementById("newUnit").value || "",
+        producto,
+        pagado: "",
+        done: false
+      });
+      document.getElementById("newName").value = "";
+      document.getElementById("newUnit").value = "";
+      save();
+      render();
+    }
+    function render() {
+      const list = document.getElementById("items");
+      list.innerHTML = "";
+      items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item" + (item.done ? " done" : "");
+        div.innerHTML = `
+          <div class="top">
+            <button class="check" onclick="toggle(${item.id})">${item.done ? "✓" : ""}</button>
+            <input class="product" value="${clean(item.producto)}" onchange="update(${item.id}, 'producto', this.value)">
+          </div>
+          <div class="grid2">
+            <label>Cantidad pedida
+              <input value="${clean(item.pedida)}" onchange="update(${item.id}, 'pedida', this.value)">
+            </label>
+            <label>Cantidad comprada
+              <input placeholder="Ej: 1,5 kg" value="${clean(item.comprada)}" onchange="update(${item.id}, 'comprada', this.value)">
+            </label>
+            <label>Precio kg / unidad
+              <input inputmode="numeric" placeholder="$" value="${clean(item.unitario)}" onchange="update(${item.id}, 'unitario', this.value)">
+            </label>
+            <label>Valor pagado final
+              <input inputmode="numeric" placeholder="Manual" value="${clean(item.pagado)}" onchange="update(${item.id}, 'pagado', this.value)">
+            </label>
+          </div>
+          <div class="total-row">
+            <div class="item-total">Total ítem: ${money(itemTotal(item))}</div>
+            <button class="delete" onclick="removeItem(${item.id})">Borrar</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+      const total = items.reduce((s,i) => s + itemTotal(i), 0);
+      const doneTotal = items.filter(i => i.done).reduce((s,i) => s + itemTotal(i), 0);
+      document.getElementById("totalTop").textContent = money(total);
+      document.getElementById("grandTotal").textContent = money(total);
+      document.getElementById("doneTotal").textContent = money(doneTotal);
+      document.getElementById("countDone").textContent = items.filter(i => i.done).length;
+      document.getElementById("countPending").textContent = items.filter(i => !i.done).length;
+    }
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+    render();
+  </script>
+</body>
+</html>
