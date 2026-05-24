@@ -2,6 +2,7 @@
   "name": "Lista de Compras",
   "short_name": "Compras",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#16a34a",
