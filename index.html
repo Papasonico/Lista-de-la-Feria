@@ -22,14 +22,17 @@
     header p{margin:6px 0 0;opacity:.92;font-size:14px}
     .toolbar{padding:14px;display:grid;gap:9px;background:#fff;border-bottom:1px solid var(--border)}
     label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
-    input,select{width:100%;border:1px solid var(--border);border-radius:14px;padding:12px;font-size:16px;background:white;min-height:45px}
+    input,select,textarea{width:100%;border:1px solid var(--border);border-radius:14px;padding:12px;font-size:16px;background:white;min-height:45px}
+    textarea{min-height:190px;font-family:inherit}
     button{border:0;border-radius:14px;padding:12px 13px;font-size:15px;font-weight:800;cursor:pointer;min-height:45px}
     .row{display:grid;grid-template-columns:1fr auto;gap:8px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
     .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
     .primary{background:var(--green);color:white}
     .secondary{background:#e5e7eb;color:#111827}
     .danger{background:#fee2e2;color:var(--red)}
     .blue{background:#dbeafe;color:var(--blue)}
+    .dark{background:#064e3b;color:white}
     .summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:14px;background:#f9fafb}
     .box{background:white;border:1px solid var(--border);border-radius:20px;padding:12px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .box span{display:block;color:var(--muted);font-size:12px}
@@ -37,7 +40,7 @@
     .new{margin:0 14px 12px;background:#f9fafb;border:1px solid var(--border);border-radius:24px;padding:13px}
     .grid-product{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
     .product-input{grid-column:1/4}
-    .items{padding:0 14px 130px}
+    .items{padding:0 14px 145px}
     .item{border:1px solid var(--border);border-radius:24px;padding:13px;margin-bottom:11px;background:white;box-shadow:0 3px 12px rgba(0,0,0,.05)}
     .item.done{background:#ecfdf5;border-color:#bbf7d0}
     .top{display:flex;gap:10px;align-items:center}
@@ -50,15 +53,36 @@
     .full{grid-column:span 2}
     .total-row{margin-top:11px;display:flex;justify-content:space-between;align-items:center;gap:8px}
     .item-total{font-weight:900;color:#15803d;font-size:16px}
-    .footer{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:540px;background:white;border-top:1px solid var(--border);padding:14px 16px calc(14px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:center;box-shadow:0 -6px 18px rgba(0,0,0,.08)}
+    .footer{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:540px;background:white;border-top:1px solid var(--border);padding:12px 14px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -6px 18px rgba(0,0,0,.08)}
+    .footer-main{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
     .footer span{display:block;color:var(--muted);font-size:12px}
     .footer strong{display:block;font-size:23px;color:#15803d}
     .small strong{font-size:16px;color:var(--dark)}
     .hint{color:var(--muted);font-size:13px;margin:2px 0 0;line-height:1.35}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:20}
+    .modal.open{display:flex}
+    .sheet{width:100%;max-width:540px;background:white;border-top-left-radius:28px;border-top-right-radius:28px;max-height:92vh;overflow:auto;padding:16px;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
+    .sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .close{background:#f3f4f6;border-radius:50%;width:42px;height:42px;padding:0}
+    .receipt{background:#fffdf7;border:1px solid #d6c5a7;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.08);margin:10px 0}
+    .receipt h2{margin:0;font-size:24px}
+    .date{color:#166534;font-weight:800;margin:6px 0 12px}
+    .section-title{display:flex;justify-content:space-between;align-items:center;font-weight:900;margin:14px 0 8px}
+    .bought{color:#15803d}.not{color:#b91c1c}
+    .rtable{width:100%;border-collapse:collapse;font-size:13px}
+    .rtable th{text-align:left;color:#374151;border-bottom:1px solid #e5e7eb;padding:6px 2px}
+    .rtable td{padding:7px 2px;border-bottom:1px solid #f3f4f6;vertical-align:top}
+    .rtable td.num,.rtable th.num{text-align:right}
+    .big-total{margin-top:14px;border:1px solid #bbf7d0;background:#f0fdf4;border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center}
+    .big-total b{font-size:28px;color:#15803d}
+    .share-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+    .toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:#111827;color:white;border-radius:999px;padding:10px 16px;display:none;z-index:30}
+    .toast.show{display:block}
     @media(max-width:390px){
       .line2{grid-template-columns:1fr 82px}
       .full{grid-column:span 2}
       .row3{grid-template-columns:1fr}
+      .share-actions{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -90,7 +114,6 @@
         <button class="secondary" onclick="duplicateList()">Duplicar</button>
         <button class="danger" onclick="deleteList()">Borrar</button>
       </div>
-      <p class="hint">Puedes tener una lista para Nona, otra para Ivania, supermercado, cumpleaños, etc.</p>
     </section>
 
     <section class="summary">
@@ -104,13 +127,8 @@
         <input class="product-input" id="newName" placeholder="Producto">
         <input id="newQty" placeholder="Cant." inputmode="decimal" value="1">
         <select id="newUnit">
-          <option value="un">un</option>
-          <option value="kg">kg</option>
-          <option value="g">g</option>
-          <option value="pack">pack</option>
-          <option value="bolsa">bolsa</option>
-          <option value="caja">caja</option>
-          <option value="lt">lt</option>
+          <option value="un">un</option><option value="kg">kg</option><option value="g">g</option>
+          <option value="pack">pack</option><option value="bolsa">bolsa</option><option value="caja">caja</option><option value="lt">lt</option>
         </select>
         <input id="newPrice" placeholder="Precio unit." inputmode="numeric">
       </div>
@@ -120,188 +138,135 @@
     <main class="items" id="items"></main>
 
     <footer class="footer">
-      <div class="small">
-        <span>Gastado marcado</span>
-        <strong id="doneTotal">$0</strong>
+      <div class="footer-main">
+        <div class="small"><span>Gastado marcado</span><strong id="doneTotal">$0</strong></div>
+        <div style="text-align:right"><span>Total lista</span><strong id="grandTotal">$0</strong></div>
       </div>
-      <div style="text-align:right">
-        <span>Total lista</span>
-        <strong id="grandTotal">$0</strong>
-      </div>
+      <button class="dark" style="width:100%" onclick="openSummary()">Finalizar compra</button>
     </footer>
   </div>
 
+  <div class="modal" id="summaryModal">
+    <div class="sheet">
+      <div class="sheet-head">
+        <div>
+          <h2 style="margin:0">Resumen final</h2>
+          <p class="hint">Copia o comparte por WhatsApp</p>
+        </div>
+        <button class="close" onclick="closeSummary()">×</button>
+      </div>
+
+      <div class="receipt" id="receipt"></div>
+
+      <div class="share-actions">
+        <button class="primary" onclick="copySummary()">Copiar resumen</button>
+        <button class="blue" onclick="shareWhatsApp()">Enviar WhatsApp</button>
+      </div>
+      <button class="secondary" style="width:100%" onclick="saveHistory()">Guardar resumen</button>
+      <p class="hint">Para enviarlo como foto: abre este resumen y saca captura de pantalla. Luego la envías por WhatsApp.</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copiado</div>
+
   <script>
-    const units = ["un","kg","g","pack","bolsa","caja","lt"];
-    const starterItems = [
-      { id: 1, qty: "1", unit: "kg", boughtQty: "", boughtUnit:"kg", unitPrice: "", producto: "Manzana", paid: "", done: false },
-      { id: 2, qty: "2", unit: "kg", boughtQty: "", boughtUnit:"kg", unitPrice: "", producto: "Membrillo", paid: "", done: false },
-      { id: 3, qty: "0,5", unit: "kg", boughtQty: "", boughtUnit:"kg", unitPrice: "", producto: "Zanahoria", paid: "", done: false },
-      { id: 4, qty: "3", unit: "un", boughtQty: "", boughtUnit:"un", unitPrice: "", producto: "Pimentón", paid: "", done: false },
-      { id: 5, qty: "1", unit: "un", boughtQty: "", boughtUnit:"un", unitPrice: "", producto: "Lechuga", paid: "", done: false }
+    const units=["un","kg","g","pack","bolsa","caja","lt"];
+    const starterItems=[
+      {id:1,qty:"1",unit:"kg",boughtQty:"",boughtUnit:"kg",unitPrice:"",producto:"Manzana",paid:"",done:false},
+      {id:2,qty:"2",unit:"kg",boughtQty:"",boughtUnit:"kg",unitPrice:"",producto:"Membrillo",paid:"",done:false},
+      {id:3,qty:"0,5",unit:"kg",boughtQty:"",boughtUnit:"kg",unitPrice:"",producto:"Zanahoria",paid:"",done:false},
+      {id:4,qty:"3",unit:"un",boughtQty:"",boughtUnit:"un",unitPrice:"",producto:"Pimentón",paid:"",done:false}
     ];
+    const defaultData={activeId:"lista-feria-nona",lists:[
+      {id:"lista-feria-nona",name:"Lista Feria Nona",items:starterItems,history:[]},
+      {id:"lista-feria-ivania",name:"Lista Feria Ivania",items:[],history:[]}
+    ]};
+    let data=JSON.parse(localStorage.getItem("listaComprasMultiCristobalV5")||"null")||defaultData;
 
-    const defaultData = {
-      activeId: "lista-feria-nona",
-      lists: [
-        { id: "lista-feria-nona", name: "Lista Feria Nona", items: starterItems },
-        { id: "lista-feria-ivania", name: "Lista Feria Ivania", items: [] }
-      ]
-    };
-
-    let data = JSON.parse(localStorage.getItem("listaComprasMultiCristobalV3") || "null") || defaultData;
-
-    function save(){ localStorage.setItem("listaComprasMultiCristobalV3", JSON.stringify(data)); }
-    function activeList(){ return data.lists.find(l => l.id === data.activeId) || data.lists[0]; }
-    function slug(name){ return name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"") + "-" + Date.now(); }
-    const money = n => new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n||0);
-    function parsePrice(v){ return Number(String(v||"").replace(/[^0-9]/g,"")) || 0; }
-    function parseQty(v){ return Number(String(v||"").replace(",",".").replace(/[^0-9.]/g,"")) || 0; }
-    function clean(v){ return String(v||"").replace(/"/g,"&quot;"); }
-    function options(selected){ return units.map(u => `<option value="${u}" ${u===selected?"selected":""}>${u}</option>`).join(""); }
-    function itemTotal(item){
-      const manual = parsePrice(item.paid);
-      if(manual>0) return manual;
-      const qty = parseQty(item.boughtQty || item.qty);
-      return qty * parsePrice(item.unitPrice);
+    function save(){localStorage.setItem("listaComprasMultiCristobalV5",JSON.stringify(data))}
+    function activeList(){return data.lists.find(l=>l.id===data.activeId)||data.lists[0]}
+    function slug(name){return name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")+"-"+Date.now()}
+    const money=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n||0);
+    function parsePrice(v){return Number(String(v||"").replace(/[^0-9]/g,""))||0}
+    function parseQty(v){return Number(String(v||"").replace(",",".").replace(/[^0-9.]/g,""))||0}
+    function clean(v){return String(v||"").replace(/"/g,"&quot;")}
+    function options(selected){return units.map(u=>`<option value="${u}" ${u===selected?"selected":""}>${u}</option>`).join("")}
+    function itemTotal(item){const manual=parsePrice(item.paid); if(manual>0)return manual; return parseQty(item.boughtQty||item.qty)*parsePrice(item.unitPrice)}
+    function itemUnitPrice(item){return parsePrice(item.unitPrice)}
+    function formatDate(d=new Date()){
+      const dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+      const meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+      return dias[d.getDay()].charAt(0).toUpperCase()+dias[d.getDay()].slice(1)+" "+d.getDate()+" de "+meses[d.getMonth()].charAt(0).toUpperCase()+meses[d.getMonth()].slice(1)+" de "+d.getFullYear();
     }
     function refreshSelector(){
-      const selector=document.getElementById("listSelector");
-      selector.innerHTML="";
-      data.lists.forEach(list=>{
-        const opt=document.createElement("option");
-        opt.value=list.id; opt.textContent=list.name;
-        if(list.id===data.activeId) opt.selected=true;
-        selector.appendChild(opt);
-      });
+      const selector=document.getElementById("listSelector"); selector.innerHTML="";
+      data.lists.forEach(list=>{const opt=document.createElement("option"); opt.value=list.id; opt.textContent=list.name; if(list.id===data.activeId)opt.selected=true; selector.appendChild(opt)})
     }
-    function switchList(id){ data.activeId=id; save(); render(); }
-    function createList(){
-      const input=document.getElementById("newListName");
-      const name=input.value.trim();
-      if(!name) return alert("Escribe un nombre para la lista.");
-      const list={id:slug(name),name,items:[]};
-      data.lists.push(list); data.activeId=list.id; input.value=""; save(); render();
-    }
-    function renameList(){
-      const list=activeList();
-      const name=prompt("Nuevo nombre de la lista:",list.name);
-      if(!name||!name.trim()) return;
-      list.name=name.trim(); save(); render();
-    }
-    function duplicateList(){
-      const list=activeList();
-      const copy=JSON.parse(JSON.stringify(list));
-      copy.id=slug(list.name+" copia"); copy.name=list.name+" copia";
-      copy.items=copy.items.map(i=>({...i,id:Date.now()+Math.floor(Math.random()*100000)}));
-      data.lists.push(copy); data.activeId=copy.id; save(); render();
-    }
-    function deleteList(){
-      if(data.lists.length<=1) return alert("Debe existir al menos una lista.");
-      const list=activeList();
-      if(!confirm("¿Borrar "+list.name+"?")) return;
-      data.lists=data.lists.filter(l=>l.id!==list.id);
-      data.activeId=data.lists[0].id; save(); render();
-    }
-    function update(id,field,value){
-      const list=activeList();
-      list.items=list.items.map(i=>i.id===id?{...i,[field]:value}:i);
-      save(); render();
-    }
-    function toggle(id){
-      const list=activeList();
-      list.items=list.items.map(i=>i.id===id?{...i,done:!i.done}:i);
-      save(); render();
-    }
-    function removeItem(id){
-      const list=activeList();
-      list.items=list.items.filter(i=>i.id!==id);
-      save(); render();
-    }
+    function switchList(id){data.activeId=id; save(); render()}
+    function createList(){const input=document.getElementById("newListName"); const name=input.value.trim(); if(!name)return alert("Escribe un nombre para la lista."); const list={id:slug(name),name,items:[],history:[]}; data.lists.push(list); data.activeId=list.id; input.value=""; save(); render()}
+    function renameList(){const list=activeList(); const name=prompt("Nuevo nombre de la lista:",list.name); if(!name||!name.trim())return; list.name=name.trim(); save(); render()}
+    function duplicateList(){const list=activeList(); const copy=JSON.parse(JSON.stringify(list)); copy.id=slug(list.name+" copia"); copy.name=list.name+" copia"; copy.items=copy.items.map(i=>({...i,id:Date.now()+Math.floor(Math.random()*100000)})); data.lists.push(copy); data.activeId=copy.id; save(); render()}
+    function deleteList(){if(data.lists.length<=1)return alert("Debe existir al menos una lista."); const list=activeList(); if(!confirm("¿Borrar "+list.name+"?"))return; data.lists=data.lists.filter(l=>l.id!==list.id); data.activeId=data.lists[0].id; save(); render()}
+    function update(id,field,value){const list=activeList(); list.items=list.items.map(i=>i.id===id?{...i,[field]:value}:i); save(); render()}
+    function toggle(id){const list=activeList(); list.items=list.items.map(i=>i.id===id?{...i,done:!i.done}:i); save(); render()}
+    function removeItem(id){const list=activeList(); list.items=list.items.filter(i=>i.id!==id); save(); render()}
     function addItem(){
-      const producto=document.getElementById("newName").value.trim();
-      if(!producto) return;
-      const list=activeList();
-      const unit=document.getElementById("newUnit").value;
-      list.items.push({
-        id:Date.now(),
-        qty:document.getElementById("newQty").value||"1",
-        unit,
-        boughtQty:"",
-        boughtUnit:unit,
-        unitPrice:document.getElementById("newPrice").value||"",
-        producto,
-        paid:"",
-        done:false
-      });
-      document.getElementById("newName").value="";
-      document.getElementById("newPrice").value="";
-      save(); render();
+      const producto=document.getElementById("newName").value.trim(); if(!producto)return;
+      const unit=document.getElementById("newUnit").value; const list=activeList();
+      list.items.push({id:Date.now(),qty:document.getElementById("newQty").value||"1",unit,boughtQty:"",boughtUnit:unit,unitPrice:document.getElementById("newPrice").value||"",producto,paid:"",done:false});
+      document.getElementById("newName").value=""; document.getElementById("newPrice").value=""; save(); render()
     }
+    function summaryText(){
+      const list=activeList(), bought=list.items.filter(i=>i.done), pending=list.items.filter(i=>!i.done), total=bought.reduce((s,i)=>s+itemTotal(i),0);
+      let t=`🛒 ${list.name}\n📅 ${formatDate()}\n\n✅ COMPRADO (${bought.length})\n`;
+      bought.forEach(i=>{t+=`• ${i.producto}: ${i.boughtQty||i.qty} ${i.boughtUnit||i.unit} - ${money(itemTotal(i))}\n`});
+      t+=`\n❌ NO COMPRADO (${pending.length})\n`;
+      pending.forEach(i=>{t+=`• ${i.producto}: ${i.qty} ${i.unit}\n`});
+      t+=`\n💰 TOTAL PAGADO: ${money(total)}`;
+      return t;
+    }
+    function receiptHTML(){
+      const list=activeList(), bought=list.items.filter(i=>i.done), pending=list.items.filter(i=>!i.done), total=bought.reduce((s,i)=>s+itemTotal(i),0);
+      const rowsBought=bought.map(i=>`<tr><td>${i.producto}</td><td class="num">${i.boughtQty||i.qty}</td><td>${i.boughtUnit||i.unit}</td><td class="num">${money(itemUnitPrice(i))}</td><td class="num">${money(itemTotal(i))}</td></tr>`).join("");
+      const rowsPending=pending.map(i=>`<tr><td>${i.producto}</td><td class="num">${i.qty}</td><td>${i.unit}</td><td class="num">—</td></tr>`).join("");
+      return `<h2>🛒 ${list.name}</h2><div class="date">📅 ${formatDate()}</div>
+      <div class="section-title bought"><span>✅ COMPRADO (${bought.length})</span><span>${money(total)}</span></div>
+      <table class="rtable"><thead><tr><th>Producto</th><th class="num">Cant.</th><th>Un.</th><th class="num">Precio</th><th class="num">Subtotal</th></tr></thead><tbody>${rowsBought||"<tr><td colspan='5'>Sin productos comprados</td></tr>"}</tbody></table>
+      <div class="section-title not"><span>❌ NO COMPRADO (${pending.length})</span></div>
+      <table class="rtable"><thead><tr><th>Producto</th><th class="num">Cant.</th><th>Un.</th><th class="num">Precio</th></tr></thead><tbody>${rowsPending||"<tr><td colspan='4'>No quedó nada pendiente</td></tr>"}</tbody></table>
+      <div class="big-total"><span><b>TOTAL PAGADO</b></span><b>${money(total)}</b></div>`;
+    }
+    function openSummary(){document.getElementById("receipt").innerHTML=receiptHTML(); document.getElementById("summaryModal").classList.add("open")}
+    function closeSummary(){document.getElementById("summaryModal").classList.remove("open")}
+    function showToast(msg){const el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),1800)}
+    async function copySummary(){try{await navigator.clipboard.writeText(summaryText()); showToast("Resumen copiado")}catch(e){alert(summaryText())}}
+    function shareWhatsApp(){window.location.href="https://wa.me/?text="+encodeURIComponent(summaryText())}
+    function saveHistory(){const list=activeList(); if(!list.history)list.history=[]; list.history.push({date:new Date().toISOString(),text:summaryText()}); save(); showToast("Resumen guardado")}
     function render(){
-      if(!data.lists.length) data=defaultData;
-      const list=activeList();
-      refreshSelector();
-      document.getElementById("currentTitle").textContent=list.name;
-      const listEl=document.getElementById("items");
-      listEl.innerHTML="";
-      if(!list.items.length){
-        listEl.innerHTML='<p class="hint" style="text-align:center;margin-top:18px;">Esta lista está vacía. Agrega el primer producto arriba.</p>';
-      }
+      if(!data.lists.length)data=defaultData;
+      const list=activeList(); refreshSelector(); document.getElementById("currentTitle").textContent=list.name;
+      const listEl=document.getElementById("items"); listEl.innerHTML="";
+      if(!list.items.length)listEl.innerHTML='<p class="hint" style="text-align:center;margin-top:18px;">Esta lista está vacía. Agrega el primer producto arriba.</p>';
       list.items.forEach(item=>{
-        if(item.pedida && !item.qty){
-          item.qty = item.pedida.replace(/[^0-9,.]/g,"") || "1";
-          item.unit = item.pedida.includes("kg") ? "kg" : "un";
-          item.unitPrice = item.unitario || "";
-          item.paid = item.pagado || "";
-        }
-        const div=document.createElement("div");
-        div.className="item"+(item.done?" done":"");
+        const div=document.createElement("div"); div.className="item"+(item.done?" done":"");
         div.innerHTML=`
-          <div class="top">
-            <button class="check" onclick="toggle(${item.id})">${item.done?"✓":""}</button>
-            <input class="product" value="${clean(item.producto)}" onchange="update(${item.id}, 'producto', this.value)">
-          </div>
-
+          <div class="top"><button class="check" onclick="toggle(${item.id})">${item.done?"✓":""}</button><input class="product" value="${clean(item.producto)}" onchange="update(${item.id}, 'producto', this.value)"></div>
           <div class="line2">
-            <label>Cant. pedida
-              <input value="${clean(item.qty)}" inputmode="decimal" onchange="update(${item.id}, 'qty', this.value)">
-            </label>
-            <label>Unidad
-              <select onchange="update(${item.id}, 'unit', this.value)">${options(item.unit||"un")}</select>
-            </label>
-
-            <label>Cant. comprada
-              <input placeholder="Ej: 1,5" value="${clean(item.boughtQty)}" inputmode="decimal" onchange="update(${item.id}, 'boughtQty', this.value)">
-            </label>
-            <label>Unidad
-              <select onchange="update(${item.id}, 'boughtUnit', this.value)">${options(item.boughtUnit||item.unit||"un")}</select>
-            </label>
-
-            <label class="full">Precio unitario / kg / un
-              <input inputmode="numeric" placeholder="$" value="${clean(item.unitPrice)}" onchange="update(${item.id}, 'unitPrice', this.value)">
-            </label>
-            <label class="full">Valor final pagado
-              <input inputmode="numeric" placeholder="Manual, si cambia" value="${clean(item.paid)}" onchange="update(${item.id}, 'paid', this.value)">
-            </label>
+            <label>Cant. pedida<input value="${clean(item.qty)}" inputmode="decimal" onchange="update(${item.id}, 'qty', this.value)"></label>
+            <label>Unidad<select onchange="update(${item.id}, 'unit', this.value)">${options(item.unit||"un")}</select></label>
+            <label>Cant. comprada<input placeholder="Ej: 1,5" value="${clean(item.boughtQty)}" inputmode="decimal" onchange="update(${item.id}, 'boughtQty', this.value)"></label>
+            <label>Unidad<select onchange="update(${item.id}, 'boughtUnit', this.value)">${options(item.boughtUnit||item.unit||"un")}</select></label>
+            <label class="full">Precio unitario / kg / un<input inputmode="numeric" placeholder="$" value="${clean(item.unitPrice)}" onchange="update(${item.id}, 'unitPrice', this.value)"></label>
+            <label class="full">Valor final pagado<input inputmode="numeric" placeholder="Manual, si cambia" value="${clean(item.paid)}" onchange="update(${item.id}, 'paid', this.value)"></label>
           </div>
-
-          <div class="total-row">
-            <div class="item-total">Total ítem: ${money(itemTotal(item))}</div>
-            <button class="danger" onclick="removeItem(${item.id})">Borrar</button>
-          </div>
-        `;
+          <div class="total-row"><div class="item-total">Total ítem: ${money(itemTotal(item))}</div><button class="danger" onclick="removeItem(${item.id})">Borrar</button></div>`;
         listEl.appendChild(div);
       });
-      const total=list.items.reduce((s,i)=>s+itemTotal(i),0);
-      const doneTotal=list.items.filter(i=>i.done).reduce((s,i)=>s+itemTotal(i),0);
-      document.getElementById("totalTop").textContent=money(total);
-      document.getElementById("grandTotal").textContent=money(total);
-      document.getElementById("doneTotal").textContent=money(doneTotal);
-      document.getElementById("countDone").textContent=list.items.filter(i=>i.done).length;
-      document.getElementById("countPending").textContent=list.items.filter(i=>!i.done).length;
+      const total=list.items.reduce((s,i)=>s+itemTotal(i),0), doneTotal=list.items.filter(i=>i.done).reduce((s,i)=>s+itemTotal(i),0);
+      document.getElementById("totalTop").textContent=money(total); document.getElementById("grandTotal").textContent=money(total); document.getElementById("doneTotal").textContent=money(doneTotal);
+      document.getElementById("countDone").textContent=list.items.filter(i=>i.done).length; document.getElementById("countPending").textContent=list.items.filter(i=>!i.done).length;
     }
-    if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+    if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
     render();
   </script>
 </body>
